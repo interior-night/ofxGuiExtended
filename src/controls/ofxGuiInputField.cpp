@@ -31,7 +31,12 @@ ofxGuiInputField<Type>::ofxGuiInputField(ofParameter<Type>& _val, const ofJson &
 
 template<typename Type>
 ofxGuiInputField<Type>::ofxGuiInputField(const std::string& _name, Type _val, Type _min, Type _max, const ofJson &config)
-	:ofxGuiInputField(value.set(_name,_val,_min,_max), config){
+	:ofxGuiInputField(){
+	value.set(_name, _val, _min, _max);
+	input = ofToString(value);
+	inputWidth = getTextBoundingBox(input, 0, 0).width;
+	value.addListener(this, &ofxGuiInputField::valueChanged);
+	_setConfig(config);
 }
 
 template<typename Type>

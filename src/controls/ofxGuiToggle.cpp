@@ -120,12 +120,12 @@ void ofxGuiToggle::generateDraw(){
 	bg.clear();
 	bg.setFilled(true);
 	border.clear();
-	border.setFillColor(borderColor);
+	border.setFillColor(borderColor.get());
 	border.setFilled(true);
 	if(value && (borderWidth <= 0 || type != ofxGuiToggleType::CHECKBOX)){
-		bg.setFillColor(fillColor);
+		bg.setFillColor(fillColor.get());
 	}else{
-		bg.setFillColor(backgroundColor);
+		bg.setFillColor(backgroundColor.get());
 	}
 	switch(type){
 		default:

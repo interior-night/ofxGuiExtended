@@ -6,6 +6,9 @@
 #include "ofBitmapFont.h"
 #include "ofJson.h"
 #include "ofImage.h"
+#include "ofPath.h"
+#include "ofVboMesh.h"
+#include <filesystem>
 
 #include "DOM/Element.h"
 
@@ -203,11 +206,10 @@ class ofxGuiElement : public DOM::Element {
 		std::string themeFilename;
 		bool updateOnThemeChange;
 		void watchTheme(ofEventArgs& args);
-		std::time_t themeUpdated;
+		std::filesystem::file_time_type themeUpdated;
 
 		ofParameter<void> parameter;
 
 		bool themeLoading = false;
 
 };
-

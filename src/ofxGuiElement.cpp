@@ -79,7 +79,7 @@ void ofxGuiElement::setup(){
 	bRegisteredForMouseEvents = false;
 	fontLoaded = false;
 	useTTF = false;
-	themeUpdated = 0;
+	themeUpdated = std::filesystem::file_time_type::min();
 	themeFilename = "";
 	updateOnThemeChange = false;
 
@@ -184,7 +184,7 @@ void ofxGuiElement::loadTheme(const string &filename, bool updateOnFileChange){
 }
 
 void ofxGuiElement::watchTheme(ofEventArgs &args){
-	std::time_t newthemeUpdated = std::filesystem::last_write_time(ofToDataPath(themeFilename));
+	std::filesystem::file_time_type newthemeUpdated = std::filesystem::last_write_time(ofToDataPath(themeFilename));
 	if(newthemeUpdated != themeUpdated){
 		themeUpdated = newthemeUpdated;
 		loadTheme(themeFilename, true);
@@ -675,14 +675,14 @@ void ofxGuiElement::generateDraw(){
 
 	bg.clear();
 
-	bg.setFillColor(backgroundColor);
+	bg.setFillColor(backgroundColor.get());
 	bg.setFilled(true);
 	bg.setStrokeWidth(0);
 
 	border.clear();
 	border.setFilled(true);
 	border.setStrokeWidth(0);
-	border.setFillColor(borderColor);
+	border.setFillColor(borderColor.get());
 
 	bg.rectRounded(borderWidth,borderWidth,getWidth()-borderWidth*2,getHeight()-borderWidth*2, borderRadius);
 	border.rectRounded(0,0,getWidth(),getHeight(), borderRadius);
@@ -699,6 +699,8 @@ void ofxGuiElement::generateDraw(){
 			backgroundTexPos.setHeight(getHeight());
 			backgroundTexPos.setPosition(0, 0);
 			switch(backgroundSize) {
+			case BackgroundSize::SCALE:
+				break;
 			case BackgroundSize::CONTAIN:
 				if(thisRatio < imgRatio) {
 					backgroundTexPos.setHeight(backgroundTexPos.width/imgRatio);

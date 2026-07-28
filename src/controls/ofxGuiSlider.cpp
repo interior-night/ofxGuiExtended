@@ -240,7 +240,7 @@ void ofxGuiSlider<DataType>::generateDraw(){
 		}else{
 			valAsPct = ofMap(value, value.getMin(), value.getMax(), 0, getHeight()-borderWidth*2, true);
 		}
-		bar.setFillColor(fillColor);
+		bar.setFillColor(fillColor.get());
 		bar.setFilled(true);
 		if(horizontal){
 			bar.rectRounded(borderWidth,borderWidth, valAsPct, getHeight()-borderWidth*2, borderRadius);
@@ -262,14 +262,14 @@ void ofxGuiSlider<DataType>::generateDraw(){
 		bg.clear();
 		bar.clear();
 
-		bg.setStrokeColor(borderColor);
+		bg.setStrokeColor(borderColor.get());
 		bg.setStrokeWidth(1);
-		bg.setFillColor(backgroundColor);
+		bg.setFillColor(backgroundColor.get());
 		bg.setFilled(true);
 		arcStrip(bg, center, outer_r-1, inner_r+1, 1);
 
 		float val = ofMap(value, value.getMin(), value.getMax(), 0, 1);
-		bar.setFillColor(fillColor);
+		bar.setFillColor(fillColor.get());
 		bar.setFilled(true);
 		arcStrip(bar, center, outer_r - 1, inner_r + 1, val);
 

@@ -5,7 +5,6 @@
 #include "../controls/ofxGuiRangeSlider.h"
 #include "../controls/ofxGuiButton.h"
 #include "../controls/ofxGuiLabel.h"
-#include "ofParameterGroup.h"
 #include "ofParameter.h"
 
 template<class VecType>
@@ -136,6 +135,8 @@ class ofxGuiContainer : public ofxGuiElement {
 		bool setActiveToggle(ofxGuiToggle* toggle);
 		ofParameter<int>& getActiveToggleIndex();
 		void deactivateAllOtherToggles(ofxGuiToggle* toggle);
+		void setSettingsFilename(const std::string& path);
+		const std::string& getSettingsFilename() const;
 
 		static std::string getClassType();
 

@@ -70,7 +70,10 @@ ofxGuiContainer::~ofxGuiContainer(){
 
 void ofxGuiContainer::setup(){
 
-	filename.set("filename","settings.xml");
+	// A relative default resolves under OF's data root. In a packaged macOS
+	// application that is the signed Resources directory, so an unnoticed
+	// header click could invalidate the bundle seal. Persistence is opt-in.
+	filename.set("filename", "");
 
 	exclusiveToggles.set("exclusive toggles", false);
 
@@ -456,6 +459,14 @@ void ofxGuiContainer::setOneToggleActive() {
 
 ofParameter<int>& ofxGuiContainer::getActiveToggleIndex() {
 	return active_toggle_index;
+}
+
+void ofxGuiContainer::setSettingsFilename(const std::string& path) {
+	filename = path;
+}
+
+const std::string& ofxGuiContainer::getSettingsFilename() const {
+	return filename.get();
 }
 
 ofAbstractParameter & ofxGuiContainer::getParameter(){

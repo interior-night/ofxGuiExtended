@@ -53,10 +53,11 @@ void ofxGuiGraphics::setGraphics(ofBaseDraws *graphics){
 			_bLoaded = true;
 			this->graphics = graphics;
 		}else{
-			ofLogWarning("ofxGuiGraphics:setGraphics()", "graphics cannot be loaded, width = 0 or height = 0");
+			ofLogWarning("ofxGuiGraphics::setGraphics")
+				<< "Graphics cannot be loaded: width or height is zero";
 		}
 	}else{
-		ofLogWarning("ofxGuiGraphics:setGraphics()", "graphics is nullptr");
+		ofLogWarning("ofxGuiGraphics::setGraphics") << "Graphics pointer is null";
 	}
 }
 

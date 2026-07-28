@@ -171,17 +171,16 @@ ofxGuiPanel::ofxGuiPanel(const ofParameterGroup & parameters, const ofJson & con
 ofxGuiPanel::ofxGuiPanel(const std::string& collectionName, const std::string& filename, float x, float y)
 	:ofxGuiPanel(collectionName){
 
-	// TODO set filename
+	setSettingsFilename(filename);
 	setPosition(x,y);
 
 }
 
 ofxGuiPanel::ofxGuiPanel(const ofParameterGroup & parameters, const std::string& filename, float x, float y)
-	:ofxGuiPanel(parameters.getName()){
+:ofxGuiPanel(parameters.getName()){
 
 	addParametersFrom(parameters);
-//	config.filename = filename;
-	// TODO set filename
+	setSettingsFilename(filename);
 	setPosition(x,y);
 
 }
@@ -219,11 +218,23 @@ void ofxGuiPanel::onHeaderMove(DOM::MoveEventArgs &args){
 }
 
 void ofxGuiPanel::onLoadPressed(){
-	loadFromFile(filename);
+	if(getSettingsFilename().empty()){
+		ofLogWarning("ofxGuiPanel")
+			<< "Load ignored for " << getName()
+			<< ": no settings file was configured";
+		return;
+	}
+	loadFromFile(getSettingsFilename());
 }
 
 void ofxGuiPanel::onSavePressed(){
-	saveToFile(filename);
+	if(getSettingsFilename().empty()){
+		ofLogWarning("ofxGuiPanel")
+			<< "Save ignored for " << getName()
+			<< ": no settings file was configured";
+		return;
+	}
+	saveToFile(getSettingsFilename());
 }
 
 std::string ofxGuiPanel::getClassType(){

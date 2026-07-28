@@ -61,7 +61,7 @@ protected:
 	virtual void _generateText(std::string valStr) override;
 	void valueStartChanged(DataType & value);
 	void valueEndChanged(DataType & value);
-	virtual std::string getText();
+	virtual std::string getText() override;
 
 	ofParameter<DataType> *activeValue;
 
