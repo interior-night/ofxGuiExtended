@@ -196,6 +196,11 @@ ofxGuiPanel::~ofxGuiPanel(){
 void ofxGuiPanel::setup(){
 
 	if(header){
+		// ofxGuiGroup2 constructs and registers its own header before the
+		// derived panel gets a chance to replace it. Keep the parameter model
+		// in sync with the DOM so the replacement header is not registered as
+		// a duplicate unnamed parameter.
+		parameters.remove(header->getParameter());
 		removeChild(header);
 	}
 	header = add<ofxGuiPanelHeader>(ofJson({{"margin", 0}}));
