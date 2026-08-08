@@ -36,6 +36,20 @@ class ofxGuiElement : public DOM::Element {
 		ofxGuiElement(const ofxGuiElement &) = delete;
 		ofxGuiElement & operator=(const ofxGuiElement &) = delete;
 
+		/// \brief Global multiplier for every size-like value in a config.
+		///
+		/// Both setConfig() and setTheme() funnel into _setConfig(), so scaling
+		/// there covers themes, per-widget JSON and defaults in one place. Lets
+		/// a host keep a fixed-pixel interface at a constant physical size on a
+		/// HiDPI backing store, where openFrameworks reports ofGetWidth() in
+		/// pixels and every hard-coded size would otherwise halve on screen.
+		///
+		/// Percentage strings ("100%") are proportional already and pass
+		/// through untouched. Set before building the interface; existing
+		/// elements are not retroactively rescaled.
+		static void setInterfaceScale(float scale);
+		static float getInterfaceScale();
+
 		void setConfig(const ofJson &config, bool recursive = false);
 		void setTheme();
 		void setTheme(const ofJson &config);

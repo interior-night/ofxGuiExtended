@@ -1,4 +1,8 @@
 #include "ofxGuiElement.h"
+
+#include <cmath>
+#include <cstdlib>
+#include <set>
 #include "containers/ofxGuiContainer.h"
 #include "ofImage.h"
 #include "ofBitmapFont.h"
@@ -223,9 +227,80 @@ void ofxGuiElement::_setConfigUsingClassifiers(const ofJson &config, bool recurs
 
 }
 
+namespace {
+
+float ofxGuiInterfaceScale = 1.0f;
+
+/// Keys whose numeric values are lengths in pixels. Deliberately excludes
+/// "precision", which is a digit count, and anything colour-valued.
+bool isScalableSizeKey(const std::string & key){
+	static const std::set<std::string> keys = {
+		"width", "height", "font-size", "border-width", "border-radius",
+		"text-padding", "padding", "margin", "margin-top", "margin-right",
+		"margin-bottom", "margin-left"
+	};
+	return keys.find(key) != keys.end();
+}
+
+/// Scales a value in place. Numbers scale directly. Strings may be a
+/// percentage, which is already proportional and must not be touched, or a
+/// space-separated list of lengths as used by "margin".
+void scaleSizeValue(ofJson & value, float scale){
+	if(value.is_number() && !value.is_boolean()){
+		value = value.get<double>() * scale;
+		return;
+	}
+	if(!value.is_string()){
+		return;
+	}
+	const std::string text = value.get<std::string>();
+	if(text.find('%') != std::string::npos){
+		return;
+	}
+	std::vector<std::string> parts = ofSplitString(text, " ", true, true);
+	if(parts.empty()){
+		return;
+	}
+	std::string scaled;
+	for(std::size_t i = 0; i < parts.size(); ++i){
+		char * end = nullptr;
+		const double parsed = std::strtod(parts[i].c_str(), &end);
+		if(end == parts[i].c_str() || (end != nullptr && *end != '\0')){
+			return; // not purely numeric; leave the whole value alone
+		}
+		if(i > 0){
+			scaled += " ";
+		}
+		scaled += ofToString(parsed * scale);
+	}
+	value = scaled;
+}
+
+void applyInterfaceScale(ofJson & config){
+	if(ofxGuiInterfaceScale == 1.0f || !config.is_object()){
+		return;
+	}
+	for(auto it = config.begin(); it != config.end(); ++it){
+		if(isScalableSizeKey(it.key())){
+			scaleSizeValue(it.value(), ofxGuiInterfaceScale);
+		}
+	}
+}
+
+}
+
+void ofxGuiElement::setInterfaceScale(float scale){
+	ofxGuiInterfaceScale = (scale > 0.f && std::isfinite(scale)) ? scale : 1.f;
+}
+
+float ofxGuiElement::getInterfaceScale(){
+	return ofxGuiInterfaceScale;
+}
+
 void ofxGuiElement::_setConfig(const ofJson &config){
 
 	ofJson _config = config;
+	applyInterfaceScale(_config);
 
 	if(!_config.is_null() && _config.size() > 0){
 
