@@ -50,6 +50,14 @@ class ofxGuiElement : public DOM::Element {
 		static void setInterfaceScale(float scale);
 		static float getInterfaceScale();
 
+		/// \brief Baseline that vertically centres one line of text in a box.
+		///
+		/// Controls historically placed text at "height / 2 + 4", which only
+		/// centres correctly for the one font size that constant was chosen
+		/// for. Larger text, such as a group header, then sits visibly high.
+		/// Derived from cap height instead, so it holds at any size.
+		float getCenteredTextBaseline(float boxHeight);
+
 		void setConfig(const ofJson &config, bool recursive = false);
 		void setTheme();
 		void setTheme(const ofJson &config);

@@ -297,6 +297,13 @@ float ofxGuiElement::getInterfaceScale(){
 	return ofxGuiInterfaceScale;
 }
 
+float ofxGuiElement::getCenteredTextBaseline(float boxHeight){
+	// "X" has no descender, so its bounding box is the cap box. Measured with
+	// the baseline at 0, its top edge is negative, so -y is the cap height.
+	const ofRectangle capBox = getTextBoundingBox("X", 0, 0);
+	return boxHeight * 0.5f - capBox.y * 0.5f;
+}
+
 void ofxGuiElement::_setConfig(const ofJson &config){
 
 	ofJson _config = config;
