@@ -118,9 +118,9 @@ void ofxGuiValueLabel<Type>::generateDraw(){
 		if(!getName().empty() && label.toString() != ""){
 			name += ": ";
 		}
-		textMesh = getTextMesh(name + label.toString(), textPadding, getShape().height / 2 + 4);
+		textMesh = getTextMesh(name + label.toString(), textPadding, this->getCenteredTextBaseline(getShape().height));
 	}else {
-		textMesh = getTextMesh(label.toString(), textPadding, getShape().height / 2 + 4);
+		textMesh = getTextMesh(label.toString(), textPadding, this->getCenteredTextBaseline(getShape().height));
 	}
 }
 

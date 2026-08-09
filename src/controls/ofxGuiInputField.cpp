@@ -375,8 +375,8 @@ void ofxGuiInputField<Type>::generateDraw(){
 template<typename Type>
 void ofxGuiInputField<Type>::generateText(){
 	std::string valStr = input;
-	textMesh = getTextMesh(getName(), textPadding, getShape().height / 2 + 4);
-	textMesh.append(getTextMesh(valStr, getShape().width - textPadding - getTextBoundingBox(valStr,0,0).width, getShape().height / 2 + 4));
+	textMesh = getTextMesh(getName(), textPadding, this->getCenteredTextBaseline(getShape().height));
+	textMesh.append(getTextMesh(valStr, getShape().width - textPadding - getTextBoundingBox(valStr,0,0).width, this->getCenteredTextBaseline(getShape().height)));
 }
 
 template<typename Type>

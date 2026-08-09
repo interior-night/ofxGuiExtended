@@ -204,7 +204,7 @@ void ofxGuiToggle::generateDraw(){
 
 				// create label
 
-				textMesh = getTextMesh(getName(), textPadding + checkboxRect.width, getShape().getHeight() / 2 + 4);
+				textMesh = getTextMesh(getName(), textPadding + checkboxRect.width, this->getCenteredTextBaseline(getShape().getHeight()));
 				break;
 			}
 			case ofxGuiToggleType::FULLSIZE: {
@@ -215,14 +215,14 @@ void ofxGuiToggle::generateDraw(){
 					default:
 					case TextAlignment::CENTERED:
 						if(getShape().getCenter().x - textWidth/2 > getShape().x+textPadding){
-							textMesh = getTextMesh(getName(), getWidth()/2 - textWidth/2, getHeight()/ 2 + 4);
+							textMesh = getTextMesh(getName(), getWidth()/2 - textWidth/2, this->getCenteredTextBaseline(getHeight()));
 							break;
 						}
 					case TextAlignment::LEFT:
-						textMesh = getTextMesh(getName(), textPadding, getShape().height / 2 + 4);
+						textMesh = getTextMesh(getName(), textPadding, this->getCenteredTextBaseline(getShape().height));
 						break;
 					case TextAlignment::RIGHT:
-						textMesh = getTextMesh(getName(), getShape().getWidth() - textWidth - textPadding, getShape().height / 2 + 4);
+						textMesh = getTextMesh(getName(), getShape().getWidth() - textWidth - textPadding, this->getCenteredTextBaseline(getShape().height));
 						break;
 
 				}

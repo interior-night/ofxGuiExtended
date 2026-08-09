@@ -51,7 +51,7 @@ void ofxGuiPanelHeader::generateDraw(){
 	ofxGuiGroup2* _parent = dynamic_cast<ofxGuiGroup2*>(parent());
 	if(_parent){
 		if(_parent->getShowName()){
-			textMesh = getTextMesh(_parent->getName(), textPadding, getHeight() / 2 + 4);
+			textMesh = getTextMesh(_parent->getName(), textPadding, this->getCenteredTextBaseline(getHeight()));
 		}
 	}
 }

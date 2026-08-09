@@ -234,8 +234,15 @@ float ofxGuiInterfaceScale = 1.0f;
 /// Keys whose numeric values are lengths in pixels. Deliberately excludes
 /// "precision", which is a digit count, and anything colour-valued.
 bool isScalableSizeKey(const std::string & key){
+	// Deliberately excludes "width" and "height". A host that lays elements
+	// out itself computes box geometry in design units and does arithmetic on
+	// it - stacking offsets, column widths - so scaling those here as well
+	// double-counts: elements render at the scaled size while positions still
+	// advance by the unscaled one, and rows overlap. Box geometry belongs to
+	// whoever positions the boxes; this scales the typography and spacing that
+	// arrive from themes and per-widget configs.
 	static const std::set<std::string> keys = {
-		"width", "height", "font-size", "border-width", "border-radius",
+		"font-size", "border-width", "border-radius",
 		"text-padding", "padding", "margin", "margin-top", "margin-right",
 		"margin-bottom", "margin-left"
 	};

@@ -88,7 +88,7 @@ void ofxGuiValuePlotter::generateDraw(){
 		label += " " + this->getName();
 	}
 
-	textMesh = getTextMesh(label, textPadding, getShape().getHeight() / 2 + 4);
+	textMesh = getTextMesh(label, textPadding, this->getCenteredTextBaseline(getShape().getHeight()));
 
 	if(plotSize > 0){
 

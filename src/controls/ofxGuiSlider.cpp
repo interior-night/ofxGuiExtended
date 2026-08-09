@@ -301,10 +301,10 @@ void ofxGuiSlider<DataType>::_generateText(std::string valStr){
 		if(horizontal){
 			textMesh.clear();
 			if(showName){
-				textMesh.append(getTextMesh(getName(), ofPoint(textPadding, getHeight() / 2 + 4)));
+				textMesh.append(getTextMesh(getName(), ofPoint(textPadding, this->getCenteredTextBaseline(getHeight()))));
 			}
 			if(showValue){
-				textMesh.append(getTextMesh(valStr, getShape().getWidth() - textPadding - getTextBoundingBox(valStr,0,0).width, getHeight() / 2 + 4));
+				textMesh.append(getTextMesh(valStr, getShape().getWidth() - textPadding - getTextBoundingBox(valStr,0,0).width, this->getCenteredTextBaseline(getHeight())));
 			}
 		}else{
 			textMesh.clear();

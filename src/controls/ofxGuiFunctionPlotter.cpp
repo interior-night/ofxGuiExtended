@@ -67,7 +67,7 @@ void ofxGuiFunctionPlotter::generateDraw(){
 
 	ofxGuiElement::generateDraw();
 
-	textMesh = getTextMesh(this->getName(), textPadding, getShape().getHeight() / 2 + 4);
+	textMesh = getTextMesh(this->getName(), textPadding, this->getCenteredTextBaseline(getShape().getHeight()));
 
 	plot.clear();
 	plot.setFilled(false);

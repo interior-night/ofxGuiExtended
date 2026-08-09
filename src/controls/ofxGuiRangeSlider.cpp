@@ -159,11 +159,11 @@ void ofxGuiRangeSlider<DataType>::_generateText(std::string valStr){
 	if(this->horizontal){
 		this->textMesh.clear();
 		if(this->showName){
-			this->textMesh.append(this->getTextMesh(this->getName(), ofPoint(this->textPadding, this->getHeight() / 2 + 4)));
+			this->textMesh.append(this->getTextMesh(this->getName(), ofPoint(this->textPadding, this->getCenteredTextBaseline(this->getHeight()))));
 		}
 		if(this->showValue){
 			this->textMesh.append(this->getTextMesh(valStr, this->getShape().getWidth() - this->textPadding
-										- this->getTextBoundingBox(valStr,0,0).width, this->getHeight() / 2 + 4));
+										- this->getTextBoundingBox(valStr,0,0).width, this->getCenteredTextBaseline(this->getHeight())));
 		}
 	}else{
 		this->textMesh.clear();
